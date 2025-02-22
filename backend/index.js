@@ -45,6 +45,9 @@ app.get('/health', (req, res) => {
 connectDB();
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 app.use('/api/quote', quotesRouter);
 
 app.listen(PORT, () => {
