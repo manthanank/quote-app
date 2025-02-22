@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:5000/api/quote',
+    apiUrl: 'https://quote-app-api.vercel.app/api/quote',
     trackingApiUrl: 'https://visitor-tracking-api.vercel.app/api/visit',
 };
