@@ -17,6 +17,8 @@ The backend server for the Quote App, built with Node.js, Express, and MongoDB. 
 - Express
 - MongoDB with Mongoose
 - Google Generative AI (Gemini)
+- Express Rate Limit
+- Helmet for security
 - Dotenv for configuration
 - CORS for cross-origin requests
 

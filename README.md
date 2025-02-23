@@ -10,6 +10,7 @@ A modern web application that displays inspiring daily quotes. Built with Angula
 - MongoDB integration for quote storage
 - CORS-enabled secure communication between frontend and backend
 - Environment-based configuration
+- SEO optimization for better visibility
 
 ## Tech Stack
 
@@ -27,6 +28,7 @@ A modern web application that displays inspiring daily quotes. Built with Angula
 - Express
 - MongoDB with Mongoose
 - Google Generative AI (Gemini)
+- Security features (helmet, rate-limiter)
 
 ## Getting Started
 

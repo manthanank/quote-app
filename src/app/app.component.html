@@ -1,5 +1,20 @@
 <div class="quote-card">
   <h1 class="app-title">Quote of the day</h1>
-  <p class="quote-text">"{{ quote }}"</p>
-  <p class="quote-author">- {{ author }}</p>
+
+  @if (isLoading()) {
+  <div class="loading-spinner">Loading...</div>
+  } @else if (error()) {
+  <div class="error-message">{{ error() }}</div>
+  } @else {
+  @defer {
+  <p class="quote-text">"{{ quote() }}"</p>
+  <p class="quote-author">- {{ author() }}</p>
+  } @placeholder {
+  <div class="quote-placeholder">Your daily inspiration is loading...</div>
+  } @loading (after 100ms; minimum 500ms) {
+  <div class="loading-spinner">Loading quote...</div>
+  } @error {
+  <div class="error-message">Failed to load quote content</div>
+  }
+  }
 </div>

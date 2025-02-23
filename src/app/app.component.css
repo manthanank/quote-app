@@ -16,7 +16,7 @@
 }
 
 .quote-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -50%;
   background: radial-gradient(
@@ -57,11 +57,9 @@
   text-align: center;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: clamp(12px, 2vw, 16px);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.2),
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
     inset 0 0 32px rgba(255, 255, 255, 0.05);
   transform: translateY(0);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -78,8 +76,7 @@
 @media (hover: hover) {
   .quote-text:hover {
     transform: translateY(-5px);
-    box-shadow: 
-      0 15px 45px rgba(0, 0, 0, 0.2),
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2),
       inset 0 0 32px rgba(255, 255, 255, 0.1);
   }
 }
@@ -127,14 +124,48 @@
   word-break: break-word;
 }
 
+.loading-spinner {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
 @keyframes float {
-  0%, 100% { 
-    transform: translate(-5%, -5%) scale(1); 
+  0%,
+  100% {
+    transform: translate(-5%, -5%) scale(1);
     opacity: 0.5;
   }
-  50% { 
-    transform: translate(5%, 5%) scale(1.1); 
+  50% {
+    transform: translate(5%, 5%) scale(1.1);
     opacity: 0.7;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
@@ -145,7 +176,7 @@
     padding: 1rem;
     width: 95%;
   }
-  
+
   .quote-author {
     font-size: clamp(0.7rem, 3vw, 0.9rem);
     padding: 0.5rem 1.2rem;
@@ -179,12 +210,12 @@
   .quote-card {
     padding: 1rem;
   }
-  
+
   .quote-text {
     max-height: 60vh;
     font-size: clamp(0.9rem, 2vw, 1.3rem);
   }
-  
+
   .quote-author {
     margin-top: 1rem;
   }
@@ -201,11 +232,11 @@
   .quote-card::before {
     animation: none;
   }
-  
+
   .quote-text {
     transition: none;
   }
-  
+
   .quote-text:hover {
     transform: none;
   }
