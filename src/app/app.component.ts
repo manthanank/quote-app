@@ -18,6 +18,8 @@ export class AppComponent {
   isLoading = signal(true);
   error = signal('');
 
+  currentYear = new Date().getFullYear();
+
   quoteService = inject(QuoteService);
   trackService = inject(TrackService);
   meta = inject(Meta);

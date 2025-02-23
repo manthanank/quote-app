@@ -1,20 +1,65 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <a href="/">
+      <i class="fas fa-quote-left"></i>
+      Quote App
+    </a>
+  </div>
+  <div class="nav-links">
+    <a href="https://github.com/manthanank/quote-app" target="_blank" rel="noopener">
+      <i class="fab fa-github"></i>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<!-- Main Content -->
 <div class="quote-card">
-  <h1 class="app-title">Quote of the day</h1>
+  <h1 class="app-title">
+    <i class="fas fa-feather-alt"></i>
+    Quote of the day
+  </h1>
 
   @if (isLoading()) {
-  <div class="loading-spinner">Loading...</div>
+  <div class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i>
+    Loading...
+  </div>
   } @else if (error()) {
-  <div class="error-message">{{ error() }}</div>
+  <div class="error-message">
+    <i class="fas fa-exclamation-circle"></i>
+    {{ error() }}
+  </div>
   } @else {
   @defer {
   <p class="quote-text">"{{ quote() }}"</p>
   <p class="quote-author">- {{ author() }}</p>
   } @placeholder {
-  <div class="quote-placeholder">Your daily inspiration is loading...</div>
+  <div class="quote-placeholder">
+    <i class="fas fa-hourglass-half"></i>
+    Your daily inspiration is loading...
+  </div>
   } @loading (after 100ms; minimum 500ms) {
-  <div class="loading-spinner">Loading quote...</div>
+  <div class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i>
+    Loading quote...
+  </div>
   } @error {
-  <div class="error-message">Failed to load quote content</div>
+  <div class="error-message">
+    <i class="fas fa-exclamation-triangle"></i>
+    Failed to load quote content
+  </div>
   }
   }
 </div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© {{ currentYear }} Quote App. Built with <i class="fas fa-heart"></i> by 
+    <a href="https://github.com/manthanank" target="_blank" rel="noopener">
+      <i class="fab fa-github"></i>
+      Manthan Ankolekar
+    </a>
+  </p>
+</footer>

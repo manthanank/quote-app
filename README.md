@@ -86,14 +86,20 @@ A modern web application that displays inspiring daily quotes. Built with Angula
 project-root/
 ├── src/                      # Angular frontend application
 │   ├── app/                  # Angular components and modules
+│   │   ├── ..             # Other components
 │   ├── services/            # Angular services
-│   └── models/              # TypeScript interfaces
-│
+│   │   ├── ..             # Other services
+│   ├── models/              # TypeScript interfaces
+│   │   ├── ..          # Other models
+│   ├── environments/         # Environment configurations
+│   ...
 └── backend/                 # Node.js backend
     ├── config/             # Database configuration
+    ├── controllers/        # API controllers
     ├── models/             # MongoDB schemas
     ├── routes/             # API routes
-    └── services/           # AI integration services
+    ├── services/           # AI integration services
+    └── ...            # Other backend files
 ```
 
 ## API Documentation
