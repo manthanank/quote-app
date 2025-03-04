@@ -5,8 +5,19 @@ const { generateResponse } = require("../services/generativeAIService");
 
 router.get("/", async (req, res) => {
   try {
-    const today = new Date().setHours(0, 0, 0, 0);
-    const existingQuote = await Quote.findOne({ date: { $gte: today } });
+    // Create date objects for start and end of current day in UTC
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+
+    // Find quote for current day using proper date range
+    const existingQuote = await Quote.findOne({
+      date: {
+        $gte: today,
+        $lt: tomorrow
+      }
+    });
 
     if (existingQuote) {
       return res.json(existingQuote);
@@ -32,6 +43,7 @@ router.get("/", async (req, res) => {
     const newQuote = await Quote.create({ text, author });
     res.json(newQuote);
   } catch (error) {
+    console.error("Quote generation error:", error);
     res.status(500).json({ error: "Error fetching quote" });
   }
 });
