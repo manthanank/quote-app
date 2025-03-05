@@ -1,65 +1,214 @@
-<!-- Navbar -->
-<nav class="navbar">
-  <div class="nav-brand">
-    <a href="/">
-      <i class="fas fa-quote-left"></i>
-      Quote App
-    </a>
-  </div>
-  <div class="nav-links">
-    <a href="https://github.com/manthanank/quote-app" target="_blank" rel="noopener">
-      <i class="fab fa-github"></i>
-      GitHub
-    </a>
-  </div>
-</nav>
+<!-- 
+  HEADER SECTION
+  - Fixed position with gradient background
+  - Contains app logo and visitor count
+  - Uses responsive spacing with Tailwind utilities
+-->
+<header
+  class="fixed top-0 w-full bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-lg z-50 transition-all duration-300">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- App Logo with hover animation -->
+    <div class="flex items-center space-x-1 group">
+      <i class="fas fa-quote-right text-teal-200 group-hover:rotate-12 transition-transform duration-300"></i>
+      <a href="/" class="text-xl font-medium tracking-wide hover:text-teal-100 transition-colors">
+        <span class="font-bold">Quote App</span>
+      </a>
+    </div>
 
-<!-- Main Content -->
-<div class="quote-card">
-  <h1 class="app-title">
-    <i class="fas fa-feather-alt"></i>
-    Quote of the day
-  </h1>
+    <!-- Visitor Counter -->
+    <div class="flex items-center">
+      <span class="flex items-center text-xs text-teal-200">
+        <i class="fas fa-user-friends mr-1 sm:mr-2"></i>
+        <!-- Dynamic visitor count from TrackService -->
+        <span>{{ visitorCount() }} visitors</span>
+      </span>
+    </div>
+  </div>
+</header>
 
-  @if (isLoading()) {
-  <div class="loading-spinner">
-    <i class="fas fa-spinner fa-spin"></i>
-    Loading...
-  </div>
-  } @else if (error()) {
-  <div class="error-message">
-    <i class="fas fa-exclamation-circle"></i>
-    {{ error() }}
-  </div>
-  } @else {
-  @defer {
-  <p class="quote-text">"{{ quote() }}"</p>
-  <p class="quote-author">- {{ author() }}</p>
-  } @placeholder {
-  <div class="quote-placeholder">
-    <i class="fas fa-hourglass-half"></i>
-    Your daily inspiration is loading...
-  </div>
-  } @loading (after 100ms; minimum 500ms) {
-  <div class="loading-spinner">
-    <i class="fas fa-spinner fa-spin"></i>
-    Loading quote...
-  </div>
-  } @error {
-  <div class="error-message">
-    <i class="fas fa-exclamation-triangle"></i>
-    Failed to load quote content
-  </div>
-  }
-  }
-</div>
+<!-- 
+  MAIN CONTENT AREA
+  - Responsive container with vertical centering
+  - Adjusts padding based on screen size
+-->
+<main class="min-h-screen bg-stone-100 flex flex-col justify-center pt-16 sm:pt-20 pb-16 px-3 sm:px-4">
+  <div class="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
+    <!-- 
+      QUOTE CARD
+      - White card with teal accent border
+      - Responsive padding and shadow effects
+    -->
+    <div class="bg-white rounded-lg shadow-xl overflow-hidden border-l-4 border-teal-500 my-4 sm:my-8">
+      <div class="p-4 sm:p-6 md:p-8">
+        <h2 class="text-lg sm:text-xl text-teal-700 font-light mb-4 sm:mb-6 flex items-center">
+          <i class="fas fa-quote-left text-teal-400 mr-2 sm:mr-3"></i>
+          Quote of the Day
+        </h2>
 
-<!-- Footer -->
-<footer class="footer">
-  <p>© {{ currentYear }} Quote App. Built with <i class="fas fa-heart"></i> by 
-    <a href="https://github.com/manthanank" target="_blank" rel="noopener">
-      <i class="fab fa-github"></i>
-      Manthan Ankolekar
-    </a>
-  </p>
+        <!-- 
+          DYNAMIC QUOTE CONTENT
+          - Uses Angular's control flow syntax (@if/@else) 
+          - Shows different UI states: loading, error, or content
+        -->
+        @if (isLoading()) {
+        <!-- Loading state with spinner animation -->
+        <div class="flex items-center justify-center py-6 sm:py-8 text-teal-600">
+          <div
+            class="animate-spin mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 border-2 border-t-transparent border-teal-500 rounded-full">
+          </div>
+          <span class="text-sm sm:text-base">Finding your quote...</span>
+        </div>
+        } @else if (error()) {
+        <!-- Error state with error message -->
+        <div class="flex items-center justify-center py-6 sm:py-8 text-rose-500">
+          <i class="fas fa-exclamation-circle mr-2"></i>
+          <span class="text-sm sm:text-base">{{ error() }}</span>
+        </div>
+        } @else {
+        <!-- 
+          QUOTE CONTENT with @defer
+          - Uses Angular's @defer for lazy loading the quote content
+          - Includes placeholder, loading, and error states
+        -->
+        @defer {
+        <!-- The actual quote content -->
+        <div class="space-y-4 sm:space-y-6">
+          <p class="text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed font-serif">
+            "{{ quote() }}"
+          </p>
+          <div class="flex items-center justify-end mt-4 sm:mt-6">
+            <div class="h-px bg-teal-200 flex-grow mr-3 sm:mr-4"></div>
+            <p class="text-teal-700 font-medium text-sm sm:text-base">{{ author() }}</p>
+          </div>
+        </div>
+        } @placeholder {
+        <!-- Initial placeholder while @defer decides whether to render -->
+        <div class="flex flex-col items-center justify-center py-8 sm:py-10 text-teal-600">
+          <div class="w-12 sm:w-16 h-1 bg-teal-200 rounded mb-4 sm:mb-6"></div>
+          <span class="text-xs sm:text-sm uppercase tracking-wider">Preparing your insight</span>
+        </div>
+        } @loading (after 100ms; minimum 500ms) {
+        <!-- Loading state that appears while deferred content loads -->
+        <div class="flex flex-col items-center justify-center py-6 sm:py-8">
+          <div class="relative w-8 h-8 sm:w-10 sm:h-10">
+            <div class="absolute inset-0 border-2 border-t-teal-500 border-teal-200 rounded-full animate-spin"></div>
+          </div>
+          <span class="text-teal-600 mt-2 sm:mt-3 text-xs sm:text-sm">Almost ready...</span>
+        </div>
+        } @error {
+        <!-- Error state if deferred content fails to load -->
+        <div class="flex items-center justify-center py-6 sm:py-8 text-rose-600">
+          <i class="fas fa-times-circle mr-2"></i>
+          <span class="text-sm sm:text-base">Unable to retrieve your quote</span>
+        </div>
+        }
+        }
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- 
+  FOOTER SECTION
+  - Fixed at bottom with gradient background
+  - Responsive design with different layouts for mobile/desktop
+  - Contains logo, copyright, and social links
+-->
+<footer class="fixed bottom-0 w-full bg-gradient-to-r from-teal-600 to-teal-500 text-white py-2 shadow-lg">
+  <div class="container mx-auto px-4">
+    <!-- 
+      DESKTOP LAYOUT
+      - Two-column grid layout with even spacing
+      - Only displays on screens larger than small breakpoint (sm)
+    -->
+    <div class="hidden sm:grid sm:grid-cols-2 gap-3 items-center">
+      <!-- Left column: Logo & Copyright -->
+      <div class="flex items-center justify-start">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-quote-right text-teal-200"></i>
+          <span class="text-sm font-medium">Quote<span class="font-light">App</span></span>
+        </div>
+        <div class="h-4 w-px bg-white/20 mx-3"></div>
+        <div class="flex items-center text-xs text-teal-100">
+          <i class="fas fa-copyright mr-1.5"></i>
+          <span>{{ currentYear }}</span>
+        </div>
+      </div>
+
+      <!-- Right column: Social links & Creator info -->
+      <div class="flex flex-row gap-4 items-center justify-end">
+        <!-- Social media links with hover effects -->
+        <div class="flex space-x-3">
+          <a href="https://github.com/manthanank/quote-app" target="_blank" rel="noopener"
+            class="text-teal-200 hover:text-white transition-all transform hover:scale-110">
+            <i class="fab fa-github-alt"></i>
+          </a>
+          <a href="https://github.com/manthanank" target="_blank" rel="noopener"
+            class="text-teal-200 hover:text-white transition-all transform hover:scale-110">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/manthanank" target="_blank" rel="noopener"
+            class="text-teal-200 hover:text-white transition-all transform hover:scale-110">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+
+        <!-- Author credit -->
+        <div class="text-xs text-teal-100 flex items-center">
+          <span class="mr-1">Created by</span>
+          <a href="https://github.com/manthanank" target="_blank" rel="noopener"
+            class="text-white hover:text-teal-100 transition-colors font-medium underline decoration-teal-300 underline-offset-2 decoration-1">
+            Manthan Ankolekar
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 
+      MOBILE LAYOUT
+      - Single column stacked layout 
+      - Only displays on screens smaller than small breakpoint (sm)
+      - More compact design optimized for small screens
+    -->
+    <div class="sm:hidden">
+      <!-- Top Row: Logo and Social Icons -->
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-quote-right text-teal-200 text-sm"></i>
+          <span class="text-sm font-medium">QuoteApp</span>
+        </div>
+
+        <!-- Compact social icons -->
+        <div class="flex items-center gap-3">
+          <a href="https://github.com/manthanank/quote-app" target="_blank" rel="noopener"
+            class="text-teal-200 hover:text-white text-lg">
+            <i class="fab fa-github-alt"></i>
+          </a>
+          <a href="https://github.com/manthanank" target="_blank" rel="noopener"
+            class="text-teal-200 hover:text-white text-lg">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/manthanank" target="_blank" rel="noopener"
+            class="text-teal-200 hover:text-white text-lg">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Copyright and Author -->
+      <div class="flex items-center justify-between text-xs text-teal-200">
+        <div>
+          <i class="fas fa-copyright mr-1"></i>
+          <span>{{ currentYear }}</span>
+        </div>
+        <div>
+          <span>Created by</span>
+          <a href="https://github.com/manthanank" target="_blank" rel="noopener"
+            class="text-white ml-1 underline decoration-teal-300 underline-offset-2 decoration-1">
+            Manthan Ankolekar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>

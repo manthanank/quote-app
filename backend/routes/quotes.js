@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
     // Find quote for current day using proper date range
     const existingQuote = await Quote.findOne({
-      date: {
+      createdAt: {
         $gte: today,
         $lt: tomorrow
       }

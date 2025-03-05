@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { QuoteService } from './services/quote.service';
 import { TrackService } from './services/track.service';
+import { Visit } from './models/visit.model';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent {
   author = signal('');
   isLoading = signal(true);
   error = signal('');
+  visitorCount = signal(0);
 
   currentYear = new Date().getFullYear();
 
@@ -76,7 +78,14 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.trackService.trackProjectVisit(this.title);
+    this.trackService.trackProjectVisit(this.title).subscribe({
+      next: (response: Visit) => {
+        this.visitorCount.set(response.uniqueVisitors);
+      },
+      error: (err: Error) => {
+        console.error('Failed to track visit:', err);
+      },
+    });
   }
 
   private loadQuote(): void {
