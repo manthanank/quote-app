@@ -23,9 +23,15 @@ router.get("/", async (req, res) => {
       return res.json(existingQuote);
     }
 
-    const quoteText = await generateResponse(
-      "Give me an inspiring quote in this exact format only: quote text - author name"
-    );
+    // Get previously used quotes to avoid repetition
+    const previousQuotes = await Quote.find({}, { text: 1 }).sort({ createdAt: -1 }).limit(20);
+    const previousTexts = previousQuotes.map(q => q.text);
+    
+    // Request a unique quote, including previous quotes to avoid
+    const prompt = `Give me an inspiring quote in this exact format only: quote text - author name. 
+    Please make sure it's not one of these previous quotes: ${previousTexts.join(', ')}`;
+
+    const quoteText = await generateResponse(prompt);
 
     // More robust parsing logic
     let text, author;
