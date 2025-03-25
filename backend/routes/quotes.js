@@ -41,9 +41,9 @@ router.get("/", async (req, res) => {
     let text, author;
     
     if (quoteMatch && quoteMatch.length >= 3) {
-      // Use the matched quote and author
-      text = quoteMatch[1];
-      author = quoteMatch[2].trim();
+      // Use the matched quote and author, removing any nested quotes
+      text = quoteMatch[1].replace(/^[""]|[""]$/g, '');
+      author = quoteMatch[2].trim().split('\n')[0]; // Ensure only first line is used
     } else if (responseText.includes("-")) {
       // Fallback to simpler parsing, taking just the first line
       const firstLine = responseText.split('\n')[0].trim();
@@ -59,6 +59,20 @@ router.get("/", async (req, res) => {
     if (!text || !author) {
       text = responseText.split('\n')[0].trim().replace(/^[""]|[""]$/g, '');
       author = "Unknown";
+    }
+
+    // Handle multiple nested quotes and clean up the text
+    text = text.replace(/\\"/g, '').replace(/^[""]|[""]$/g, '').replace(/"{2,}/g, '"').replace(/"{2,}/g, '"');
+    
+    // Clean up author: remove any newlines and additional text
+    if (author.includes('\n')) {
+      author = author.split('\n')[0].trim();
+    }
+    
+    // Additional filter for extraneous text in author field (like "Okay, I will avoid...")
+    if (author.toLowerCase().includes('okay') || author.toLowerCase().includes('here')) {
+      const cleanAuthor = author.split(/\s+/g).slice(0, 3).join(' ');
+      author = cleanAuthor;
     }
 
     // Final verification
