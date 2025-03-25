@@ -27,21 +27,41 @@ router.get("/", async (req, res) => {
     const previousQuotes = await Quote.find({}, { text: 1 }).sort({ createdAt: -1 }).limit(20);
     const previousTexts = previousQuotes.map(q => q.text);
     
-    // Request a unique quote, including previous quotes to avoid
-    const prompt = `Give me an inspiring quote in this exact format only: quote text - author name. 
+    // Request a unique quote with more specific formatting instructions
+    const prompt = `Generate a single inspiring quote in this exact format only: "quote text" - author name.
+    Do not include any additional text, explanations, or multiple quotes.
     Please make sure it's not one of these previous quotes: ${previousTexts.join(', ')}`;
 
-    const quoteText = await generateResponse(prompt);
-
-    // More robust parsing logic
+    const responseText = await generateResponse(prompt);
+    
+    // Extract just the first quote if multiple are provided
+    // Find the pattern of "quote" - author in the response
+    const quoteMatch = responseText.match(/[""](.+?)[""] - (.+?)($|\n)/);
+    
     let text, author;
-    if (quoteText.includes("-")) {
-      [text, author] = quoteText.split("-").map((s) => s.trim());
-    } else {
-      text = quoteText.trim();
+    
+    if (quoteMatch && quoteMatch.length >= 3) {
+      // Use the matched quote and author
+      text = quoteMatch[1];
+      author = quoteMatch[2].trim();
+    } else if (responseText.includes("-")) {
+      // Fallback to simpler parsing, taking just the first line
+      const firstLine = responseText.split('\n')[0].trim();
+      // Split by the first occurrence of " - "
+      const splitIndex = firstLine.indexOf(" - ");
+      if (splitIndex !== -1) {
+        text = firstLine.substring(0, splitIndex).trim().replace(/^[""]|[""]$/g, '');
+        author = firstLine.substring(splitIndex + 3).trim();
+      }
+    }
+
+    // If parsing failed, use a default approach
+    if (!text || !author) {
+      text = responseText.split('\n')[0].trim().replace(/^[""]|[""]$/g, '');
       author = "Unknown";
     }
 
+    // Final verification
     if (!text) {
       throw new Error("Invalid quote format received");
     }
