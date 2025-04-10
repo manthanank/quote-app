@@ -5,19 +5,33 @@
   - Uses responsive spacing with Tailwind utilities
 -->
 <header
-  class="fixed top-0 w-full bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-lg z-50 transition-all duration-300">
+  class="fixed top-0 w-full bg-gradient-to-r from-teal-600 to-teal-500 dark:from-slate-800 dark:to-slate-700 text-white shadow-lg z-50 transition-all duration-300">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
     <!-- App Logo with hover animation -->
     <div class="flex items-center space-x-1 group">
-      <i class="fas fa-quote-right text-teal-200 group-hover:rotate-12 transition-transform duration-300"></i>
-      <a href="/" class="text-xl font-medium tracking-wide hover:text-teal-100 transition-colors">
+      <i
+        class="fas fa-quote-right text-teal-200 dark:text-slate-300 group-hover:rotate-12 transition-transform duration-300"></i>
+      <a href="/"
+        class="text-xl font-medium tracking-wide hover:text-teal-100 dark:hover:text-slate-200 transition-colors">
         <span class="font-bold">Quote App</span>
       </a>
     </div>
 
-    <!-- Visitor Counter -->
-    <div class="flex items-center">
-      <span class="flex items-center text-xs text-teal-200">
+    <!-- Theme Toggle and Visitor Counter -->
+    <div class="flex items-center space-x-4">
+      <!-- Dark/Light Mode Toggle -->
+      <button (click)="toggleDarkMode()"
+        class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-700/30 dark:bg-slate-600/50 hover:bg-teal-700/50 dark:hover:bg-slate-600/70 transition-colors"
+        aria-label="Toggle dark mode">
+        @if (darkMode()) {
+        <i class="fas fa-sun text-yellow-200"></i>
+        } @else {
+        <i class="fas fa-moon text-teal-200"></i>
+        }
+      </button>
+
+      <!-- Visitor Counter -->
+      <span class="flex items-center text-xs text-teal-200 dark:text-slate-300">
         <i class="fas fa-user-friends mr-1 sm:mr-2"></i>
         <!-- Dynamic visitor count from TrackService -->
         <span>{{ visitorCount() }} visitors</span>
@@ -31,17 +45,20 @@
   - Responsive container with vertical centering
   - Adjusts padding based on screen size
 -->
-<main class="min-h-screen bg-stone-100 flex flex-col justify-center pt-16 sm:pt-20 pb-16 px-3 sm:px-4">
+<main
+  class="min-h-screen bg-stone-100 dark:bg-slate-900 flex flex-col justify-center pt-16 sm:pt-20 pb-16 px-3 sm:px-4 transition-colors duration-300">
   <div class="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto">
     <!-- 
       QUOTE CARD
-      - White card with teal accent border
+      - White card with accent border
       - Responsive padding and shadow effects
     -->
-    <div class="bg-white rounded-lg shadow-xl overflow-hidden border-l-4 border-teal-500 my-4 sm:my-8">
+    <div
+      class="bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden border-l-4 border-teal-500 dark:border-slate-500 my-4 sm:my-8 transition-colors duration-300">
       <div class="p-4 sm:p-6 md:p-8">
-        <h2 class="text-lg sm:text-xl text-teal-700 font-light mb-4 sm:mb-6 flex items-center">
-          <i class="fas fa-quote-left text-teal-400 mr-2 sm:mr-3"></i>
+        <h2
+          class="text-lg sm:text-xl text-teal-700 dark:text-slate-300 font-light mb-4 sm:mb-6 flex items-center transition-colors">
+          <i class="fas fa-quote-left text-teal-400 dark:text-slate-400 mr-2 sm:mr-3"></i>
           Quote of the Day
         </h2>
 
@@ -52,15 +69,15 @@
         -->
         @if (isLoading()) {
         <!-- Loading state with spinner animation -->
-        <div class="flex items-center justify-center py-6 sm:py-8 text-teal-600">
+        <div class="flex items-center justify-center py-6 sm:py-8 text-teal-600 dark:text-slate-400">
           <div
-            class="animate-spin mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 border-2 border-t-transparent border-teal-500 rounded-full">
+            class="animate-spin mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 border-2 border-t-transparent border-teal-500 dark:border-slate-400 rounded-full">
           </div>
           <span class="text-sm sm:text-base">Finding your quote...</span>
         </div>
         } @else if (error()) {
         <!-- Error state with error message -->
-        <div class="flex items-center justify-center py-6 sm:py-8 text-rose-500">
+        <div class="flex items-center justify-center py-6 sm:py-8 text-rose-500 dark:text-rose-400">
           <i class="fas fa-exclamation-circle mr-2"></i>
           <span class="text-sm sm:text-base">{{ error() }}</span>
         </div>
@@ -73,31 +90,35 @@
         @defer {
         <!-- The actual quote content -->
         <div class="space-y-4 sm:space-y-6">
-          <p class="text-lg sm:text-xl md:text-2xl text-gray-700 leading-relaxed font-serif">
+          <p
+            class="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-200 leading-relaxed font-serif transition-colors">
             "{{ quote() }}"
           </p>
           <div class="flex items-center justify-end mt-4 sm:mt-6">
-            <div class="h-px bg-teal-200 flex-grow mr-3 sm:mr-4"></div>
-            <p class="text-teal-700 font-medium text-sm sm:text-base">{{ author() }}</p>
+            <div class="h-px bg-teal-200 dark:bg-slate-600 flex-grow mr-3 sm:mr-4 transition-colors"></div>
+            <p class="text-teal-700 dark:text-slate-300 font-medium text-sm sm:text-base transition-colors">{{ author()
+              }}</p>
           </div>
         </div>
         } @placeholder {
         <!-- Initial placeholder while @defer decides whether to render -->
-        <div class="flex flex-col items-center justify-center py-8 sm:py-10 text-teal-600">
-          <div class="w-12 sm:w-16 h-1 bg-teal-200 rounded mb-4 sm:mb-6"></div>
+        <div class="flex flex-col items-center justify-center py-8 sm:py-10 text-teal-600 dark:text-slate-400">
+          <div class="w-12 sm:w-16 h-1 bg-teal-200 dark:bg-slate-600 rounded mb-4 sm:mb-6 transition-colors"></div>
           <span class="text-xs sm:text-sm uppercase tracking-wider">Preparing your insight</span>
         </div>
         } @loading (after 100ms; minimum 500ms) {
         <!-- Loading state that appears while deferred content loads -->
         <div class="flex flex-col items-center justify-center py-6 sm:py-8">
           <div class="relative w-8 h-8 sm:w-10 sm:h-10">
-            <div class="absolute inset-0 border-2 border-t-teal-500 border-teal-200 rounded-full animate-spin"></div>
+            <div
+              class="absolute inset-0 border-2 border-t-teal-500 border-teal-200 dark:border-t-slate-300 dark:border-slate-600 rounded-full animate-spin">
+            </div>
           </div>
-          <span class="text-teal-600 mt-2 sm:mt-3 text-xs sm:text-sm">Almost ready...</span>
+          <span class="text-teal-600 dark:text-slate-400 mt-2 sm:mt-3 text-xs sm:text-sm">Almost ready...</span>
         </div>
         } @error {
         <!-- Error state if deferred content fails to load -->
-        <div class="flex items-center justify-center py-6 sm:py-8 text-rose-600">
+        <div class="flex items-center justify-center py-6 sm:py-8 text-rose-600 dark:text-rose-400">
           <i class="fas fa-times-circle mr-2"></i>
           <span class="text-sm sm:text-base">Unable to retrieve your quote</span>
         </div>
@@ -114,7 +135,8 @@
   - Responsive design with different layouts for mobile/desktop
   - Contains logo, copyright, and social links
 -->
-<footer class="fixed bottom-0 w-full bg-gradient-to-r from-teal-600 to-teal-500 text-white py-2 shadow-lg">
+<footer
+  class="fixed bottom-0 w-full bg-gradient-to-r from-teal-600 to-teal-500 dark:from-slate-800 dark:to-slate-700 text-white py-2 shadow-lg transition-colors duration-300">
   <div class="container mx-auto px-4">
     <!-- 
       DESKTOP LAYOUT
@@ -125,11 +147,11 @@
       <!-- Left column: Logo & Copyright -->
       <div class="flex items-center justify-start">
         <div class="flex items-center gap-2">
-          <i class="fas fa-quote-right text-teal-200"></i>
+          <i class="fas fa-quote-right text-teal-200 dark:text-slate-300"></i>
           <span class="text-sm font-medium">Quote App</span>
         </div>
         <div class="h-4 w-px bg-white/20 mx-3"></div>
-        <div class="flex items-center text-xs text-teal-100">
+        <div class="flex items-center text-xs text-teal-100 dark:text-slate-300">
           <i class="fas fa-copyright mr-1.5"></i>
           <span>{{ currentYear }}</span>
         </div>
@@ -140,27 +162,27 @@
         <!-- Social media links with hover effects -->
         <div class="flex space-x-3 sm:space-x-4">
           <a href="https://github.com/manthanank/quote-app" target="_blank" rel="noopener"
-            class="text-teal-200 hover:text-white transition-all transform hover:scale-110 text-base sm:text-lg p-1.5">
+            class="text-teal-200 dark:text-slate-300 hover:text-white transition-all transform hover:scale-110 text-base sm:text-lg p-1.5">
             <i class="fab fa-github-alt"></i>
             <span class="sr-only">Project Repository</span>
           </a>
           <a href="https://github.com/manthanank" target="_blank" rel="noopener"
-            class="text-teal-200 hover:text-white transition-all transform hover:scale-110 text-base sm:text-lg p-1.5">
+            class="text-teal-200 dark:text-slate-300 hover:text-white transition-all transform hover:scale-110 text-base sm:text-lg p-1.5">
             <i class="fab fa-github"></i>
             <span class="sr-only">GitHub Profile</span>
           </a>
           <a href="https://www.linkedin.com/in/manthanank" target="_blank" rel="noopener"
-            class="text-teal-200 hover:text-white transition-all transform hover:scale-110 text-base sm:text-lg p-1.5">
+            class="text-teal-200 dark:text-slate-300 hover:text-white transition-all transform hover:scale-110 text-base sm:text-lg p-1.5">
             <i class="fab fa-linkedin"></i>
             <span class="sr-only">LinkedIn Profile</span>
           </a>
         </div>
 
         <!-- Author credit -->
-        <div class="text-xs text-teal-100 flex items-center">
+        <div class="text-xs text-teal-100 dark:text-slate-300 flex items-center">
           <span class="mr-1">Created by</span>
           <a href="https://github.com/manthanank" target="_blank" rel="noopener"
-            class="text-white hover:text-teal-100 active:text-teal-50 transition-colors font-medium underline decoration-teal-300 underline-offset-2 decoration-1">
+            class="text-white hover:text-teal-100 dark:hover:text-slate-200 active:text-teal-50 transition-colors font-medium underline decoration-teal-300 dark:decoration-slate-500 underline-offset-2 decoration-1">
             Manthan Ankolekar
           </a>
         </div>
@@ -177,24 +199,24 @@
       <!-- Top Row: Logo and Social Icons -->
       <div class="flex items-center justify-between mb-1">
         <div class="flex items-center gap-2">
-          <i class="fas fa-quote-right text-teal-200 text-sm"></i>
+          <i class="fas fa-quote-right text-teal-200 dark:text-slate-300 text-sm"></i>
           <span class="text-sm font-medium">Quote App</span>
         </div>
 
         <!-- Compact social icons -->
         <div class="flex items-center gap-3">
           <a href="https://github.com/manthanank/quote-app" target="_blank" rel="noopener"
-            class="text-teal-200 hover:text-white text-lg active:scale-90 transition-all p-1.5">
+            class="text-teal-200 dark:text-slate-300 hover:text-white text-lg active:scale-90 transition-all p-1.5">
             <i class="fab fa-github-alt"></i>
             <span class="sr-only">Project Repository</span>
           </a>
           <a href="https://github.com/manthanank" target="_blank" rel="noopener"
-            class="text-teal-200 hover:text-white text-lg active:scale-90 transition-all p-1.5">
+            class="text-teal-200 dark:text-slate-300 hover:text-white text-lg active:scale-90 transition-all p-1.5">
             <i class="fab fa-github"></i>
             <span class="sr-only">GitHub Profile</span>
           </a>
           <a href="https://www.linkedin.com/in/manthanank" target="_blank" rel="noopener"
-            class="text-teal-200 hover:text-white text-lg active:scale-90 transition-all p-1.5">
+            class="text-teal-200 dark:text-slate-300 hover:text-white text-lg active:scale-90 transition-all p-1.5">
             <i class="fab fa-linkedin"></i>
             <span class="sr-only">LinkedIn Profile</span>
           </a>
@@ -202,7 +224,7 @@
       </div>
 
       <!-- Bottom Row: Copyright and Author -->
-      <div class="flex items-center justify-between text-xs text-teal-200">
+      <div class="flex items-center justify-between text-xs text-teal-200 dark:text-slate-300">
         <div>
           <i class="fas fa-copyright mr-1"></i>
           <span>{{ currentYear }}</span>
@@ -210,7 +232,7 @@
         <div>
           <span>Created by</span>
           <a href="https://github.com/manthanank" target="_blank" rel="noopener"
-            class="text-white hover:text-teal-100 active:text-teal-50 transition-colors">
+            class="text-white hover:text-teal-100 dark:hover:text-slate-200 active:text-teal-50 transition-colors">
             Manthan Ankolekar
           </a>
         </div>

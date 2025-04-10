@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, effect, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { QuoteService } from './services/quote.service';
 import { TrackService } from './services/track.service';
@@ -11,7 +11,7 @@ import { Visit } from './models/visit.model';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'quote-app';
 
   quote = signal('');
@@ -19,6 +19,7 @@ export class AppComponent {
   isLoading = signal(true);
   error = signal('');
   visitorCount = signal(0);
+  darkMode = signal(false); // New signal for dark mode state
 
   currentYear = new Date().getFullYear();
 
@@ -74,10 +75,31 @@ export class AppComponent {
       },
     ]);
 
+    // Set up dark mode effect
+    effect(() => {
+      if (this.darkMode()) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      // Save preference to localStorage
+      localStorage.setItem('darkMode', this.darkMode().toString());
+    });
+
     this.loadQuote();
   }
 
   ngOnInit(): void {
+    // Load theme preference from localStorage
+    const savedTheme = localStorage.getItem('darkMode');
+    if (savedTheme) {
+      this.darkMode.set(savedTheme === 'true');
+    } else {
+      // Check for system preference if no saved preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      this.darkMode.set(prefersDark);
+    }
+
     this.trackService.trackProjectVisit(this.title).subscribe({
       next: (response: Visit) => {
         this.visitorCount.set(response.uniqueVisitors);
@@ -86,6 +108,10 @@ export class AppComponent {
         console.error('Failed to track visit:', err);
       },
     });
+  }
+
+  toggleDarkMode(): void {
+    this.darkMode.update(current => !current);
   }
 
   private loadQuote(): void {
