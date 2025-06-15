@@ -18,7 +18,7 @@
   "license": "MIT",
   "description": "A simple quote app using Node.js, Express, MongoDB, and Mongoose.",
   "dependencies": {
-    "@google/generative-ai": "^0.22.0",
+    "@google/genai": "^1.5.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
