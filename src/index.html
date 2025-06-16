@@ -3,27 +3,39 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Quote App</title>
+  <title>Daily Quotes - AI-Powered Inspiration</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://quote-app-manthanank.vercel.app/">
 
-  <!-- Basic meta tags -->
+  <!-- Enhanced meta tags -->
   <meta name="author" content="Manthan Ankolekar">
-  <meta name="keywords" content="angular, nodejs, express, mongodb, quotes, daily quotes, inspiration">
+  <meta name="keywords"
+    content="daily quotes, inspiration, motivation, AI quotes, wisdom, personal growth, mindfulness, angular app, modern design">
   <meta name="robots" content="index, follow">
   <meta name="description"
-    content="Get your daily dose of inspiration with AI-generated quotes. A modern web app built with Angular and powered by Google Gemini AI.">
+    content="Discover daily inspiration with AI-generated quotes. Beautiful, responsive web app featuring motivational quotes powered by Google Gemini AI. Perfect for daily motivation and mindfulness.">
+  <meta name="theme-color" content="#3b82f6">
+  <meta name="color-scheme" content="light dark">
 
   <!-- Open Graph meta tags -->
-  <meta property="og:title" content="Quote App">
+  <meta property="og:title" content="Daily Quotes - AI-Powered Inspiration">
   <meta property="og:description"
-    content="Get your daily dose of inspiration with AI-generated quotes. A modern web app built with Angular and powered by Google Gemini AI.">
+    content="Discover daily inspiration with AI-generated quotes. Beautiful, responsive web app featuring motivational quotes powered by Google Gemini AI.">
   <meta property="og:url" content="https://quote-app-manthanank.vercel.app/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Daily Quotes">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Daily Quotes - AI-Powered Inspiration">
+  <meta name="twitter:description"
+    content="Discover daily inspiration with AI-generated quotes. Beautiful, responsive web app.">
+  <meta name="twitter:creator" content="@manthanank">
 
   <!-- Progressive Web App links -->
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -31,12 +43,56 @@
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Apple specific meta tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Daily Quotes">
+
+  <!-- Preconnect to external domains for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+  <!-- Google Fonts for better typography -->
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap">
+  </noscript>
+
+  <!-- Font Awesome with performance optimization -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </noscript>
+
+  <!-- Performance and Security -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="referrer" content="origin-when-cross-origin">
+
+  <!-- Structured data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Daily Quotes",
+      "description": "AI-powered daily inspiration through motivational quotes",
+      "url": "https://quote-app-manthanank.vercel.app/",
+      "author": {
+        "@type": "Person",
+        "name": "Manthan Ankolekar"
+      },
+      "applicationCategory": "Lifestyle",
+      "operatingSystem": "Web Browser"
+    }
+  </script>
 </head>
 
-<body>
+<body class="font-inter">
   <app-root></app-root>
 </body>
 

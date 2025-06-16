@@ -1,0 +1,115 @@
+/* Component-specific styles for enhanced visual effects */
+
+/* Floating quote animation */
+.quote-card {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Staggered animation for action buttons */
+.action-button:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.action-button:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+/* Enhanced hover effect for social links */
+.social-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.social-link:hover::before {
+  left: 100%;
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* Pulsing visitor counter */
+.visitor-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Enhanced loading spinner */
+.enhanced-spinner {
+  position: relative;
+}
+
+.enhanced-spinner::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite reverse;
+}
+
+/* Stats card hover effect */
+.stats-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Quote text reveal animation */
+.quote-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: reveal 0.8s ease-out forwards;
+}
+
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom focus indicators for better accessibility */
+.custom-focus:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Mobile-optimized button styles */
+@media (max-width: 640px) {
+  .mobile-button {
+    padding: 12px 24px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .gradient-bg {
+    background: #000 !important;
+    color: #fff !important;
+  }
+}

@@ -96,7 +96,9 @@ export class AppComponent implements OnInit {
       this.darkMode.set(savedTheme === 'true');
     } else {
       // Check for system preference if no saved preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
       this.darkMode.set(prefersDark);
     }
 
@@ -109,12 +111,11 @@ export class AppComponent implements OnInit {
       },
     });
   }
-
   toggleDarkMode(): void {
-    this.darkMode.update(current => !current);
+    this.darkMode.update((current) => !current);
   }
 
-  private loadQuote(): void {
+  loadQuote(): void {
     this.isLoading.set(true);
     this.error.set('');
 
@@ -129,5 +130,41 @@ export class AppComponent implements OnInit {
         this.isLoading.set(false);
       },
     });
+  }
+
+  shareQuote(): void {
+    const quoteText = `"${this.quote()}" - ${this.author()}`;
+
+    if (navigator.share) {
+      // Use native sharing if available
+      navigator
+        .share({
+          title: 'Daily Quote',
+          text: quoteText,
+          url: window.location.href,
+        })
+        .catch((err) => {
+          console.log('Error sharing:', err);
+          this.fallbackShare(quoteText);
+        });
+    } else {
+      // Fallback to clipboard
+      this.fallbackShare(quoteText);
+    }
+  }
+
+  private fallbackShare(text: string): void {
+    // Copy to clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          // You could show a toast notification here
+          console.log('Quote copied to clipboard!');
+        })
+        .catch((err) => {
+          console.error('Failed to copy quote:', err);
+        });
+    }
   }
 }
